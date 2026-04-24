@@ -9,7 +9,7 @@ pipeline {
         stage('Clone Repo From GitHub') {
             steps {
                 echo 'Cloning from Repo...'
-                git url: 'https://github.com/skleak1/Assignment7.git', branch: 'main'
+                git url: 'https://github.com/skleak1/FinalProject.git', branch: 'main'
                 echo 'Cloning Done'
             }
         }
