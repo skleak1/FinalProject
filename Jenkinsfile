@@ -113,24 +113,22 @@ pipeline {
                 }
                 
                 sshagent(['my-ec2-key']) {
-                    sh '''
-                    echo 'Waiting for EC2 user-data and SSH connectivity...'
-                      sleep 60
-                    '''
-                    
                     sh """
-                        ssh -o StrictHostKeyChecking=no ubuntu@${EC2_IP} '
-                            if lsofi 5000 -t >/dev/null; then
-                            echo "Port 5000 is in use, killing process..."
-                            sudo fuser -k 5000/tcp
-                            fi
+                    echo 'Waiting for EC2...'
+                    sleep 60
 
-                            docker pull khingleak/nodeapi:v1.0 &&
-                            docker stop app || true &&
-                            docker rm app || true &&
-                            docker run -d -p 5000:5000 --name app khingleak/nodeapi:v1.0
-                        '
-                        echo 'Deployment Complete'
+                    ssh -o StrictHostKeyChecking=no ubuntu@${EC2_IP} << EOF
+                        if lsof -i:5000 -t >/dev/null; then
+                            sudo fuser -k 5000/tcp
+                        fi
+
+                        docker pull khingleak/nodeapi:v1.0
+                        docker stop app || true
+                        docker rm app || true
+                        docker run -d -p 5000:5000 --name app khingleak/nodeapi:v1.0
+                    EOF
+
+                    echo 'Deployment Complete'
                     """
                 }
             }
