@@ -117,7 +117,7 @@ pipeline {
                     echo 'Waiting for EC2 user-data and SSH connectivity...'
                       sleep 60
 
-                    ssh -o StrictHostKeyChecking=no ubuntu@${EC2_IP} "
+                    ssh -o StrictHostKeyChecking=no ubuntu@${EC2_IP} '
                         if lsofi 5000 -t >/dev/null; then
                         echo "Port 5000 is in use, killing process..."
                         sudo fuser -k 5000/tcp
@@ -127,7 +127,7 @@ pipeline {
                         docker stop app || true &&
                         docker rm app || true &&
                         docker run -d -p 5000:5000 --name app khingleak/nodeapi:v1.0
-                    "
+                    '
                     echo 'Deployment Complete'
                     """
                 }
@@ -138,7 +138,7 @@ pipeline {
             steps {
                 sshagent(['my-ec2-key']) {
                     sh """
-                    ssh -o StrictHostKeyChecking=no ubuntu@${EC2_IP} "
+                    ssh -o StrictHostKeyChecking=no ubuntu@${EC2_IP} '
                         sudo usermod -aG docker ubuntu
                         newgrp docker
                         sudo chmod 777 /var/run/docker.sock
@@ -150,7 +150,7 @@ pipeline {
                         cd EC2-Monitor-Grafana-Prometheus/
                         sudo docker-compose -f "/build-process/docker-compose.yml" up -d --build
 
-                    "
+                    '
                     echo 'Prometheus and Grafana Setup Complete'
                     """
                 }
