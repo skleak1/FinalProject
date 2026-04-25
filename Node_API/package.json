@@ -1,5 +1,5 @@
 {
-  "name": "assignment2",
+  "name": "finalproject",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -8,16 +8,16 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/skleak1/Assignment2.git"
+    "url": "git+https://github.com/skleak1/FinalProject.git"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "type": "commonjs",
   "bugs": {
-    "url": "https://github.com/skleak1/Assignment2/issues"
+    "url": "https://github.com/skleak1/FinalProject/issues"
   },
-  "homepage": "https://github.com/skleak1/Assignment2#readme",
+  "homepage": "https://github.com/skleak1/FinalProject#readme",
   "dependencies": {
     "express": "^5.2.1"
   }
