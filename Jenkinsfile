@@ -122,6 +122,8 @@ pipeline {
                             sudo fuser -k 5000/tcp
                         fi
 
+                        sudo usermod -aG docker ubuntu
+                        sudo chmod 777 /var/run/docker.sock
                         docker pull khingleak/nodeapi:v1.0
                         docker stop app || true
                         docker rm app || true
@@ -139,8 +141,6 @@ pipeline {
                 sshagent(['my-ec2-key']) {
                     sh """
                     ssh -o StrictHostKeyChecking=no ubuntu@${EC2_IP} << EOF
-                        sudo usermod -aG docker ubuntu
-                        sudo chmod 777 /var/run/docker.sock
                         sudo chmod +x /usr/local/bin/docker-compose
                         cd EC2-Monitor-Grafana-Prometheus
                         sudo docker-compose -f build-process/docker-compose.yml up -d --build

@@ -60,8 +60,8 @@ resource "aws_instance" "website_server" {
               sudo apt install -y docker.io
               git clone https://github.com/chanmuk1/EC2-Monitor-Grafana-Prometheus.git || true
               sudo curl -L \
-              "https://github.com/docker/compose/releases/latest/download/docker-compose-\$(uname -s)-\$(uname -m)" \
-              -o /usr/local/bin/docker-compose
+              "https://github.com/docker/compose/releases/latest/download/docker-compose-$(uname -s)-$(uname -m)" -o \
+              /usr/local/bin/docker-compose
               EOF
 }
 
