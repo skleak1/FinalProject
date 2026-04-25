@@ -53,7 +53,12 @@ resource "aws_instance" "website_server" {
     Name = "${var.my_env}-app-instance"
   }
 
-  user_data = file("${path.root}/scripts/user-data.sh")
+  user_data = <<-EOF
+              #!/bin/bash
+              sudo apt update -y
+              sudo apt upgrade -y
+              sudo apt install -y docker.io
+              EOF
 }
 
 output "ec2_public_ip" {
