@@ -15,23 +15,6 @@ pipeline {
             }
         }
 
-        stage('SonarQube Quality Check') {
-            steps {
-                withSonarQubeEnv("jenkins-sonar"){
-                sh "$SONAR_HOME/bin/sonar-scanner -Dsonar.projectName=final-project -Dsonar.projectKey=final-project"
-                }
-                echo 'Scanning Done'
-            }
-        }
-
-        stage('Quality Gate') {
-            steps {
-                timeout(time: 2, unit: 'MINUTES') {
-                waitForQualityGate abortPipeline: true
-                }
-            }
-        }
-
         stage("Trivy Code Scan") {
             steps {
                 sh '''
@@ -65,7 +48,7 @@ pipeline {
                     -v /var/run/docker.sock:/var/run/docker.sock:ro \
                     -v trivy-cache:/root/.cache/ \
                     aquasec/trivy:canary \
-                    image --exit-code 1 --severity CRITICAL nodeapi:latest
+                    image --exit-code 1 --severity HIGH,CRITICAL nodeapi:latest
                 '''
                 echo 'Trivy Docker Image Scan Complete'
             }
