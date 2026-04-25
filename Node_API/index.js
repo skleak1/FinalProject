@@ -16,9 +16,9 @@ app.post('/add', (req, res) => {
   res.send('Inside Adding API');
 });
 
-app.put('/update', (req, res) => {
-  res.send('Inside Updating API');
-});
+// app.put('/update', (req, res) => {
+//   res.send('Inside Updating API');
+// });
 
 app.delete('/delete', (req, res) => {
   res.send('Inside Deleting API');
