@@ -138,7 +138,7 @@ pipeline {
             steps {
                 sshagent(['my-ec2-key']) {
                     sh """
-                    ssh -o StrictHostKeyChecking=no ubuntu@${EC2_IP} '
+                    ssh -o StrictHostKeyChecking=no ubuntu@${EC2_IP} << EOF
                         sudo usermod -aG docker ubuntu
                         newgrp docker
                         sudo chmod 777 /var/run/docker.sock
@@ -150,7 +150,7 @@ pipeline {
                         cd EC2-Monitor-Grafana-Prometheus/
                         sudo docker-compose -f "/build-process/docker-compose.yml" up -d --build
 
-                    '
+                    EOF
                     echo 'Prometheus and Grafana Setup Complete'
                     """
                 }
