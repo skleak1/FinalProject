@@ -8,14 +8,14 @@ resource "aws_default_vpc" "default" {
 }
 
 resource "aws_security_group" "ec2-sg" {
-  name        = "Allow Port 5000 and 22"
-  description = "Open Port 5000 and 22"
+  name        = "Allow Port 80 and 22"
+  description = "Open Port 80 and 22"
   vpc_id      = aws_default_vpc.default.id
 
   ingress {
-    description = "Open Port 5000 For Incoming Traffic"
-    from_port   = 5000
-    to_port     = 5000
+    description = "Open Port 80 For Incoming Traffic"
+    from_port   = 80
+    to_port     = 80
     protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
   }
