@@ -140,17 +140,12 @@ pipeline {
                     sh """
                     ssh -o StrictHostKeyChecking=no ubuntu@${EC2_IP} << EOF
                         sudo usermod -aG docker ubuntu
-                        newgrp docker
                         sudo chmod 777 /var/run/docker.sock
-                        git clone https://github.com/chanmuk1/EC2-Monitor-Grafana-Prometheus.git
-                        sudo curl -L \
-                        "https://github.com/docker/compose/releases/latest/download/docker-compose-$(uname -s)-$(uname -m)" -o \
-                        /usr/local/bin/docker-compose
                         sudo chmod +x /usr/local/bin/docker-compose
-                        cd EC2-Monitor-Grafana-Prometheus/
-                        sudo docker-compose -f "/build-process/docker-compose.yml" up -d --build
-
+                        cd EC2-Monitor-Grafana-Prometheus
+                        sudo docker-compose -f build-process/docker-compose.yml up -d --build
                     EOF
+
                     echo 'Prometheus and Grafana Setup Complete'
                     """
                 }
