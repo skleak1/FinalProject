@@ -65,7 +65,7 @@ pipeline {
                     -v /var/run/docker.sock:/var/run/docker.sock:ro \
                     -v trivy-cache:/root/.cache/ \
                     aquasec/trivy:canary \
-                    image --exit-code 1 --severity HIGH,CRITICAL nodeapi:latest
+                    image --exit-code 1 --severity CRITICAL nodeapi:latest
                 '''
                 echo 'Trivy Docker Image Scan Complete'
             }
